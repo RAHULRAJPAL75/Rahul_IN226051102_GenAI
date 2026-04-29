@@ -323,7 +323,7 @@ print(result['response'])
 ## 📁 FILE STRUCTURE
 
 ```
-RAG PROJECT/
+RAG_PROJECT/
 ├── src/                          # Source code
 │   ├── __init__.py
 │   ├── config.py                 # Configuration

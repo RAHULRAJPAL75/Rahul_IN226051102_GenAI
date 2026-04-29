@@ -13,7 +13,7 @@ A **production-ready RAG-Based Customer Support Assistant** with:
 ## 📂 Project Structure
 
 ```
-RAG PROJECT/
+RAG_PROJECT/
 │
 ├── 📄 README.md                    ← Start here! Project overview
 ├── 📄 QUICKSTART.md                ← 5-minute setup guide

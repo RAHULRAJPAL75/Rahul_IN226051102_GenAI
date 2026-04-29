@@ -72,7 +72,7 @@ User Query
 
 1. **Clone the repository**
 ```bash
-cd "RAG PROJECT"
+cd RAG_PROJECT
 ```
 
 2. **Install dependencies**
@@ -127,7 +127,7 @@ Ticket TICKET_20240115123045 resolved.
 ## 📁 Project Structure
 
 ```
-RAG PROJECT/
+RAG_PROJECT/
 ├── src/
 │   ├── config.py                 # Configuration management
 │   ├── document_processor.py     # PDF loading & chunking

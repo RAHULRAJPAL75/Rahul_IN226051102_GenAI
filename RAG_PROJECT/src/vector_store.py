@@ -9,6 +9,7 @@ class EmbeddingManager:
         self.model = SentenceTransformer(model_name)
     
     def embed_text(self, text: str) -> List[float]:
+        
         return self.model.encode(text).tolist()
     
     def embed_batch(self, texts: List[str]) -> List[List[float]]:

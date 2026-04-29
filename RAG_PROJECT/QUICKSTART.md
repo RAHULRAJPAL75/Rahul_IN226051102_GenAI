@@ -162,7 +162,7 @@ Otherwise, AI handles it! ✅
 ## 📁 Project Structure
 
 ```
-RAG PROJECT/
+RAG_PROJECT/
 ├── src/              # Core system code
 ├── docs/             # Design documents (HLD, LLD, Technical)
 ├── data/             # Knowledge base files
