@@ -346,3 +346,12 @@ For questions or support:
 ---
 
 **Built with ❤️ for intelligent customer support**
+
+---
+
+# 🚀 GenAI Prompt Engineering – LangChain Assignment (Previous)
+
+This project was part of the **Data Science Internship at Innomatics Research Labs**.
+The goal was to build a **Mini Prompt Engine** using LangChain.
+
+[Details for previous assignment were here in the README]
