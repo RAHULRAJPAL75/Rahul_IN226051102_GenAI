@@ -1,0 +1,214 @@
+# SIMPLE FLOWCHART DIAGRAM
+# Perfect for presentations and easy to understand
+
+═══════════════════════════════════════════════════════════════════════════
+           RAG CUSTOMER SUPPORT SYSTEM - SIMPLE FLOWCHART
+═══════════════════════════════════════════════════════════════════════════
+
+
+                         ┌─────────────────┐
+                         │   USER QUERY    │
+                         │ "How to reset   │
+                         │  password?"     │
+                         └────────┬────────┘
+                                  │
+                                  ▼
+                    ╔═════════════════════════╗
+                    ║   STEP 1: CLASSIFY      ║
+                    ║   INTENT                ║
+                    ║                         ║
+                    ║   LLM analyzes query    ║
+                    ║   Determines type       ║
+                    ║   Gets confidence       ║
+                    ╚═══════════┬═════════════╝
+                                │
+                                ▼
+                    ╔═════════════════════════╗
+                    ║   STEP 2: RETRIEVE      ║
+                    ║   CONTEXT               ║
+                    ║                         ║
+                    ║   Embed query           ║
+                    ║   Search vector DB      ║
+                    ║   Get top-3 chunks      ║
+                    ╚═══════════┬═════════════╝
+                                │
+                                ▼
+                    ╔═════════════════════════╗
+                    ║   STEP 3: ROUTE         ║
+                    ║   DECISION              ║
+                    ║                         ║
+                    ║   Check confidence      ║
+                    ║   Check intent type     ║
+                    ║   Decide path           ║
+                    ╚═══════════┬═════════════╝
+                                │
+                ┌───────────────┴───────────────┐
+                │                               │
+                ▼                               ▼
+    ╔═══════════════════════╗       ╔═══════════════════════╗
+    ║   AI PATH             ║       ║   HUMAN PATH          ║
+    ║                       ║       ║                       ║
+    ║   STEP 4A:            ║       ║   STEP 4B:            ║
+    ║   GENERATE RESPONSE   ║       ║   ESCALATE TO HUMAN   ║
+    ║                       ║       ║                       ║
+    ║   Use context         ║       ║   Create ticket       ║
+    ║   Call LLM            ║       ║   Add to queue        ║
+    ║   Return answer       ║       ║   Notify agent        ║
+    ╚═══════════┬═══════════╝       ╚═══════════┬═══════════╝
+                │                               │
+                └───────────────┬───────────────┘
+                                │
+                                ▼
+                    ┌─────────────────────┐
+                    │   OUTPUT TO USER    │
+                    │                     │
+                    │   AI Answer   OR    │
+                    │   Ticket ID         │
+                    └─────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════
+                         EXAMPLE FLOWS
+═══════════════════════════════════════════════════════════════════════════
+
+EXAMPLE 1: SIMPLE QUESTION (AI HANDLES)
+────────────────────────────────────────
+Query: "What is the price?"
+  ↓
+Classify: simple_question (confidence: 0.95)
+  ↓
+Retrieve: 3 relevant chunks (confidence: 0.85)
+  ↓
+Route: HIGH CONFIDENCE → AI PATH
+  ↓
+Generate: "CloudSync Pro costs $9.99/month"
+  ↓
+User receives AI answer ✓
+
+
+EXAMPLE 2: COMPLAINT (ESCALATES)
+────────────────────────────────
+Query: "Your service is terrible!"
+  ↓
+Classify: complaint (confidence: 0.98)
+  ↓
+Retrieve: 3 chunks (confidence: 0.75)
+  ↓
+Route: SENSITIVE INTENT → HUMAN PATH
+  ↓
+Escalate: Create TICKET_20240115123045
+  ↓
+User receives ticket ID ✓
+  ↓
+Human agent resolves
+
+
+═══════════════════════════════════════════════════════════════════════════
+                         SYSTEM COMPONENTS
+═══════════════════════════════════════════════════════════════════════════
+
+┌────────────────────────────────────────────────────────────────────────┐
+│                                                                        │
+│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐             │
+│  │   DOCUMENT   │   │    VECTOR    │   │     LLM      │             │
+│  │  PROCESSOR   │──▶│    STORE     │◀──│  INTERFACE   │             │
+│  │              │   │              │   │              │             │
+│  │ • PDF Load   │   │ • ChromaDB   │   │ • OpenAI    │             │
+│  │ • Chunking   │   │ • Embeddings │   │ • GPT-3.5   │             │
+│  └──────────────┘   │ • Search     │   │ • Classify  │             │
+│                     └──────────────┘   │ • Generate  │             │
+│                                        └──────────────┘             │
+│                                                                        │
+│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐             │
+│  │  LANGGRAPH   │   │     HITL     │   │    CONFIG    │             │
+│  │   WORKFLOW   │   │   MANAGER    │   │              │             │
+│  │              │   │              │   │              │             │
+│  │ • 4 Nodes    │   │ • Tickets    │   │ • API Keys   │             │
+│  │ • Routing    │   │ • Queue      │   │ • Settings   │             │
+│  │ • State      │   │ • Resolution │   │ • Thresholds │             │
+│  └──────────────┘   └──────────────┘   └──────────────┘             │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════
+                         ROUTING CRITERIA
+═══════════════════════════════════════════════════════════════════════════
+
+                    ┌─────────────────────┐
+                    │   QUERY RECEIVED    │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ Confidence < 0.7?   │───YES──┐
+                    └──────────┬──────────┘        │
+                               │ NO                │
+                               ▼                   │
+                    ┌─────────────────────┐        │
+                    │ Intent = Complaint? │───YES──┤
+                    └──────────┬──────────┘        │
+                               │ NO                │
+                               ▼                   │
+                    ┌─────────────────────┐        │
+                    │ Technical Issue?    │───YES──┤
+                    └──────────┬──────────┘        │
+                               │ NO                │
+                               ▼                   │
+                    ┌─────────────────────┐        │
+                    │ Human Requested?    │───YES──┤
+                    └──────────┬──────────┘        │
+                               │ NO                │
+                               ▼                   ▼
+                    ┌─────────────────────┐  ┌──────────┐
+                    │   AI GENERATES      │  │ ESCALATE │
+                    │   RESPONSE          │  │ TO HUMAN │
+                    └─────────────────────┘  └──────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════
+                         KEY METRICS
+═══════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                                                                         │
+│  PERFORMANCE                    ACCURACY                                │
+│  ├─ Query Latency: 600ms        ├─ Retrieval: 85%                      │
+│  ├─ Embedding: 50ms             ├─ Intent: 90%                         │
+│  ├─ Search: 20ms                └─ Response: 85%                       │
+│  └─ LLM: 500ms                                                          │
+│                                                                         │
+│  COST                           SCALABILITY                             │
+│  ├─ Per Query: $0.001           ├─ Vectors: Millions                   │
+│  ├─ Per Day (10K): $10          ├─ Queries/sec: 10-50                  │
+│  └─ Per Month: $300             └─ Storage: 2MB/1000 pages             │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════
+                         TECHNOLOGY STACK
+═══════════════════════════════════════════════════════════════════════════
+
+    APPLICATION LAYER
+    ┌─────────────────────────────────────┐
+    │ Python 3.9+ | CLI Interface         │
+    └─────────────────────────────────────┘
+                    ↓
+    ORCHESTRATION LAYER
+    ┌─────────────────────────────────────┐
+    │ LangGraph | State Management        │
+    └─────────────────────────────────────┘
+                    ↓
+    PROCESSING LAYER
+    ┌─────────────────────────────────────┐
+    │ OpenAI GPT-3.5 | LangChain          │
+    └─────────────────────────────────────┘
+                    ↓
+    DATA LAYER
+    ┌─────────────────────────────────────┐
+    │ ChromaDB | SentenceTransformers     │
+    └─────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════
